@@ -13,5 +13,7 @@ export default {
     </main>
 </template>
 <style lang="scss" scoped>
-    
+main{
+    background-color: rgb(212, 143, 56);
+}
 </style>
