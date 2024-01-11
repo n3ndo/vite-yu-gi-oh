@@ -1,26 +1,29 @@
 <script>
 import { store } from './store.js';
 import AppHeader from './components/AppHeader.vue';
-import AppMain from './components/AppMain.vue';
+import CardList from './components/CardList.vue'
 export default {
-  components:{
+  components: {
     AppHeader,
-    AppMain
+    CardList,
   },
-  data(){
-    return{
+  data() {
+    return {
       store
     }
   }
 }
 </script>
 <template lang="">
-  <div>
+  <main>
     <AppHeader />
-    <AppMain />
-  </div>
+    <CardList />
+  </main>
 </template>
 <style lang="scss">
-  @use './styles/generals.scss';
+@use './styles/generals.scss';
 
+main{
+  background-color: rgb(212, 143, 56);
+}
 </style>

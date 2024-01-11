@@ -1,8 +1,12 @@
 <script>
 import axios from 'axios';
 import { store } from '../store.js';
+import AppSearch from './AppSearch.vue'
 export default {
     name: 'CardList',
+    components: {
+        AppSearch
+    },
     data() {
         return {
             store,
@@ -13,7 +17,21 @@ export default {
             axios.get(this.store.endpoint).then((response) => {
                 this.store.cardlist = response.data.data
             })
+
+            let apiUrl = store.endpoint
+
+            if (store.archetypes !== '') {
+                apiUrl += `&`
+            }
+            else {
+                apiUrl += `?`
+            }
+
+            apiUrl += `archetype=${store.archetypes}`;
+
         }
+
+
 
     },
     mounted() {
@@ -23,6 +41,7 @@ export default {
 </script>
 <template lang="">
     <div class="container ">
+        <AppSearch @perform_select="getCardList()"/>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-3" v-for="card, index in store.cardlist" :key="index">
                 <div class="cardlist text-center my-3">
@@ -38,14 +57,15 @@ export default {
 <style lang="scss" scoped>
 @use '../styles/generals.scss';
 
-.row{
+.row {
     background-color: white;
-    .cardlist{
+
+    .cardlist {
         max-width: 200px;
         height: 95%;
         background-color: rgb(212, 143, 56);
 
-        h3{
+        h3 {
             color: white;
         }
     }

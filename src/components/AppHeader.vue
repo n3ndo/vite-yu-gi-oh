@@ -15,5 +15,6 @@ export default {
 
 header{
     display: flex;
+    background-color: white;
 }
 </style>
