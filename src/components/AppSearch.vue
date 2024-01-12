@@ -1,15 +1,23 @@
 <script>
+import axios from 'axios';
 import { store } from '../store.js';
 export default {
+    name: 'AppSearch',
     data() {
         return {
             store,
-            archetypeArray: [
-                'Alien',
-                'Noble Knight',
-                'Melodious',
-                'Archfiend'
-            ],
+            archetypeList: [],
+        }
+    },
+    created() {
+        this.getArchetypeList();
+    },
+    methods: {
+        getArchetypeList() {
+            axios.get(store.apiArchetypeUrl).then((response) => {
+                console.log(response.data);
+                this.archetypeList = response.data.slice(0, 15);
+            })
         }
     }
 }
@@ -17,20 +25,21 @@ export default {
 <template lang="">
     <div class="container mb-3">
         <div class="row">
-            <div class="col-auto">
-                <label for="filter" class="control-label">Archetype</label>
-                <select id="filter" v-model="store.archetype" class="form-select">
-                    <option value="" selected></option>
-                    <option v-for="archetype, index in archetypeArray" :key="index" :value="archetype">
-                        {{ archetype }}
-                    </option>
-                </select>
-            </div>
-            <div class="col-3">
-                <button class="btn btn-primary" @click="$emit('perform_select')">Select</button>
-            </div>
+            <select class="select-archetype" v-model="store.searchArchetype" @change="$emit('filter_cards')">
+                <option value="">Tutti</option>
+                <option :value="archetype.archetype_name" v-for="archetype, index in archetypeList" :key="index">
+                    {{ archetype.archetype_name }}
+                </option>
+            </select>
         </div>
     </div>
 </template>
 <style lang="scss" scoped>
+.select-archetype {
+    background-color: white;
+    border: none;
+    padding: 4px;
+    width: 100px;
+    margin-top: 10px;
+}
 </style>

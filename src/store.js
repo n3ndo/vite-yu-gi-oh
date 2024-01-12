@@ -1,7 +1,8 @@
 import { reactive } from "vue";
 
 export const store = reactive({
-    endpoint: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0 ',
+    apiUrl: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?num=48&offset=0 ',
     cardlist: [],
-    archetypes: '',
+    apiArchetypeUrl: 'https://db.ygoprodeck.com/api/v7/archetypes.php',
+    searchArchetype: '',
 })

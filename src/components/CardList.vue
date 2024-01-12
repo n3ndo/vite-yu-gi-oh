@@ -14,21 +14,20 @@ export default {
     },
     methods: {
         getCardList() {
-            axios.get(this.store.endpoint).then((response) => {
+
+            let apiUrl = store.apiUrl;
+            if (store.searchArchetype !== '') {
+                apiUrl += `&archetype=${store.searchArchetype}`;
+
+            }
+            axios.get(apiUrl).then((response) => {
                 this.store.cardlist = response.data.data
             })
 
-            let apiUrl = store.endpoint
 
-            if (store.archetypes !== '') {
-                apiUrl += `&`
-            }
-            else {
-                apiUrl += `?`
-            }
-
-            apiUrl += `archetype=${store.archetypes}`;
-
+        },
+        filterCardsArchetype() {
+            this.getCardList();
         }
 
 
@@ -40,15 +39,14 @@ export default {
 }
 </script>
 <template lang="">
-    <div class="container ">
-        <AppSearch @perform_select="getCardList()"/>
+    <div class="container pb-5">
+        <AppSearch @filter_cards="filterCardsArchetype"/>
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-3" v-for="card, index in store.cardlist" :key="index">
+            <div class="col-6 col-md-3 d-flex justify-content-center" v-for="card, index in store.cardlist" :key="index">
                 <div class="cardlist text-center my-3">
                     <img :src="card.card_images[0].image_url" class="img-fluid" alt="">
                     <h3>{{ card.name }}</h3>
                     <p>{{ card.archetype }}</p>
-
                 </div>
             </div>
         </div>
